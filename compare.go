@@ -166,7 +166,9 @@ func ValidSimpleVersionFormat(value string) bool {
 	normalized := Normalize(value)
 	for _, component := range prepVersion(normalized) {
 		if numVersion(component) == unknownForm {
-			return false
+			if _, known := specialForms[component]; !known {
+				return false
+			}
 		}
 	}
 	return true
